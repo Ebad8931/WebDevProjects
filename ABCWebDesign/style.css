@@ -1,0 +1,188 @@
+/* Colors   #222831 #393E46 #00ADB5 #EEEEEE  */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin: 0px;
+    padding: 0px;
+    background-color: #EEEEEE;
+    color: #393E46;
+}
+
+/* Global */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: #222831;
+    color: #EEEEEE;
+    border-bottom: 4px solid #00ADB5;
+}
+header #logo {
+    float: left;
+}
+header #logoname {
+    color: #00ADB5
+}
+nav {
+    float: right;    
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+nav a {
+    color: #EEEEEE;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+nav li {
+    float: left;
+    width: 100px;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 30px;
+}
+nav li :hover {
+    color: #00ADB5;
+    font-weight: bold;
+}
+
+
+/* Banner*/
+#banner {
+    height: 580px;
+    width: 100%;
+    background: url(images/banner2.png) no-repeat 0 -160px;
+    text-align: center;
+    color: #EEEEEE;
+}
+#banner h1 {
+    margin-top: 200px;
+    font-size: 55px;
+}
+#banner p {
+    font-size: 20px;
+    padding: 0 20%;
+    font-weight: bold;
+}
+
+/*newsletter*/
+.newsletter {
+    background-color: #222831;
+}
+.newsletter p {
+    margin: 35px 0;
+    color: #EEEEEE;
+    font-size: 20px;
+    font-weight: bold;
+    float: left;
+
+}
+.newsletter form {
+    margin: 30px 0;
+    float: right;
+}
+
+.newsletter input[type="email"] {
+    width: 250px;
+    height: 30px;
+    margin-right: 5px;
+}
+.newsletter input[type="button"] {
+    width: 100px;
+    height: 35px;
+    border: none;
+    background-color: #00ADB5;
+    color: #EEEEEE;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* box layout */
+#boxes {
+    margin-top: 30px;
+}
+#boxes .box {
+    float: left;
+    width: 30%;
+    padding: 20px;
+    text-align: center;
+}
+#boxes img {
+    height: 300px;
+}
+
+
+.main-content {
+    width: 70%;
+    padding: 25px 20px 0px 0px;
+    float: left;
+    min-height: 470px;
+}
+
+#about h1 {
+    margin-top: 0;
+}
+
+.service {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #FFFFFF;
+}
+
+.sidebar {
+    background-color: #222831;
+    color: #EEEEEE;
+    width: 20%;
+    float: right;
+    margin: 25px;
+    padding: 1% 2%; 
+}
+.sidebar hr {
+    background-color: #00ADB5;
+    width: 50%;
+    height: 4px;
+    border: none;
+    margin-left: 0;
+    margin-bottom: 15px;
+}
+
+/* Quote Form */
+#quote input {
+    width: 90%;
+    height: 30px;
+    margin: 10px 0 10px 0;
+}
+#quote textarea {
+    width: 90%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px 0 10px 0;
+}
+#quote input[type="button"] {
+    width: 100px;
+    height: 35px;
+    border: none;
+    background-color: #00ADB5;
+    color: #EEEEEE;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 10px 0 20px 0;
+}
+
+/*footer*/
+footer {
+    background-color: #222831;
+    color: #EEEEEE;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    text-align: center;
+    font-weight: bold;
+    border-top: 3px solid #00ADB5;
+}
