@@ -64,3 +64,8 @@ footer {
 .l {
     background-image: url("images/crash.png");
 }
+
+.button-pressed {
+    box-shadow: 10px solid #DBEDF3;
+    opacity: 0.5;
+}

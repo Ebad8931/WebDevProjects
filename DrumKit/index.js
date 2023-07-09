@@ -1,5 +1,6 @@
 var buttons = document.querySelectorAll(".drum")
 
+
 function playSound(drumLetter) {
     var audioLocation = "sounds/"
     switch (drumLetter) {
@@ -34,14 +35,28 @@ function playSound(drumLetter) {
 }
 
 
+function buttonAnimation(drumLetter) {
+    if (!['w', 'a', 's', 'd', 'j', 'k', 'l'].includes(drumLetter)) {
+        return;
+    } 
+    var activeButton = document.querySelector("." + drumLetter);
+    activeButton.classList.add("button-pressed");
+    setTimeout(function() {
+        activeButton.classList.remove("button-pressed");
+    }, 100);
+}
+
+
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function () {
         var drumLetter = this.textContent.toLowerCase();
+        buttonAnimation(drumLetter);
         playSound(drumLetter);      
     });
 }
 
 document.addEventListener("keypress", function(event) {
     var drumLetter = event.key.toLowerCase();
+    buttonAnimation(drumLetter);
     playSound(drumLetter);
 });
