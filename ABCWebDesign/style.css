@@ -59,7 +59,7 @@ nav li :hover {
 #banner {
     height: 580px;
     width: 100%;
-    background: url(images/banner2.png) no-repeat 0 -160px;
+    background: url(images/banner.png) no-repeat 0 -160px;
     text-align: center;
     color: #EEEEEE;
 }
