@@ -5,7 +5,7 @@ function playSound(drumLetter) {
     var audioLocation = "sounds/"
     switch (drumLetter) {
         case 'w':
-            audioLocation += "snare.mp3";
+            audioLocation += "tom-4.mp3";
             break;
         case 'a':
             audioLocation += "tom-1.mp3";
@@ -17,7 +17,7 @@ function playSound(drumLetter) {
             audioLocation += "tom-3.mp3";
             break;
         case 'j':
-            audioLocation += "tom-4.mp3";
+            audioLocation += "snare.mp3";
             break;
         case 'k':
             audioLocation += "kick-bass.mp3";
