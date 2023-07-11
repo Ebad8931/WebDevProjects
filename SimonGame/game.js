@@ -4,12 +4,20 @@ var gamePattern = [];
 var userClickedPattern = [];
 
 
-function animateColor(color) {
+function flashColor(color) {
     if (!buttonColors.includes(color)) {
         return;
     }
     $("#" + color).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
     
+}
+
+
+function animatePress(color) {
+    $("#" + color).addClass("pressed");
+    setTimeout(() => {
+        $("#" + color).removeClass("pressed");
+    }, 100);
 }
 
 
@@ -33,12 +41,13 @@ function nextSequence() {
     var randomChosenColor = buttonColors[randomNumber];
     gamePattern.push(randomChosenColor);
     playColorSound(randomChosenColor);
-    animateColor(randomChosenColor);
+    flashColor(randomChosenColor);
 }
 
 
 $(".btn").click(function () { 
     var userChosenColor = $(this).attr("id");    
     userClickedPattern.push(userChosenColor);
-    console.log(userClickedPattern);
+    playColorSound(userChosenColor);
+    animatePress(userChosenColor);
 });
