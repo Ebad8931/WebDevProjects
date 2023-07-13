@@ -3,7 +3,7 @@ body {
     background-color: #011F3F;
 }
 
-#level-title {
+h1 {
     font-family: 'Press Start 2P', cursive;
     font-size: 3rem;
     margin: 5%;
@@ -49,4 +49,11 @@ body {
 .game-over {
     background-color: red;
     opacity: 0.8;
+}
+
+iframe {
+    border: none;
+    margin-bottom: 100px;
+    width: 50vw;
+    height: 28vw;
 }
