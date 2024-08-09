@@ -249,11 +249,11 @@ function displayBudget() {
 }
 
 function displayTotalIncome() {
-    document.querySelector(DOMstrings.totalIncomeLabel).textContent = formatNumber(INCOME_TOTAL);
+    document.querySelector(DOMstrings.totalIncomeLabel).textContent = formatNumber(INCOME_TOTAL, 'income');
 }
 
 function displayTotalExpenses() {
-    document.querySelector(DOMstrings.totalExpensesLabel).textContent = formatNumber(EXPENSES_TOTAL);
+    document.querySelector(DOMstrings.totalExpensesLabel).textContent = formatNumber(EXPENSES_TOTAL, 'expense');
 }
 
 function displayPercentageOfTotalExpenses() {
@@ -317,18 +317,19 @@ function formatNumber(number, type) {
 
     numberString = integerPart + '.' + decimalPart;
 
+    let sign;
     switch (type) {
         case 'income':
-            numberString = '+ ' + numberString;
+            sign = '+';
             break;
         case 'expense':
-            numberString = '- ' + numberString;
+            sign = '-';
             break;
         default:
         // invalid type parameter
     }
 
-    console.log('returning ' + numberString);
+    numberString = sign + ' ' + numberString;
 
     return numberString;
 }
