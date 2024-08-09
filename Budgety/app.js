@@ -209,7 +209,7 @@ function displayItem(item, type) {
             <div class="item clearfix" id="${item.id}">
                 <div class="item__description">${item.description}</div>
                 <div class="right clearfix">
-                <div class="item__value">+ ${item.value}</div>
+                <div class="item__value">${formatNumber(item.value, item.type)}</div>
                 <div class="item__delete">
                     <button class="item__delete--btn">
                     <i class="ion-ios-close-outline"></i>
@@ -225,7 +225,7 @@ function displayItem(item, type) {
             <div class="item clearfix" id="${item.id}">
             <div class="item__description">${item.description}</div>
             <div class="right clearfix">
-                <div class="item__value">- ${item.value}</div>
+                <div class="item__value">${formatNumber(item.value, item.type)}</div>
                 <div class="item__percentage">${Math.round(item.percentage)}%</div>
                 <div class="item__delete">
                 <button class="item__delete--btn">
@@ -241,21 +241,19 @@ function displayItem(item, type) {
 }
 
 function displayBudget() {
-    var totalBudgetString;
+    var budgetType = 'income';  // by default budget is positive
     if (BUDGET < 0) {
-        totalBudgetString = '- ' + BUDGET * -1;
-    } else {
-        totalBudgetString = '+ ' + BUDGET;
+        budgetType = 'expense'
     }
-    document.querySelector(DOMstrings.budgetLabel).textContent = totalBudgetString;
+    document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(BUDGET, budgetType);
 }
 
 function displayTotalIncome() {
-    document.querySelector(DOMstrings.totalIncomeLabel).textContent = '+ ' + INCOME_TOTAL;
+    document.querySelector(DOMstrings.totalIncomeLabel).textContent = formatNumber(INCOME_TOTAL);
 }
 
 function displayTotalExpenses() {
-    document.querySelector(DOMstrings.totalExpensesLabel).textContent = '- ' + EXPENSES_TOTAL;
+    document.querySelector(DOMstrings.totalExpensesLabel).textContent = formatNumber(EXPENSES_TOTAL);
 }
 
 function displayPercentageOfTotalExpenses() {
@@ -294,6 +292,45 @@ function resetInputFields() {
     document.querySelector(DOMstrings.inputType).value = 'income';
     document.querySelector(DOMstrings.inputValue).value = '';
     document.querySelector(DOMstrings.inputDescription).value = '';
+}
+
+function formatNumber(number, type) {
+    /* 
+        returns number as a string
+        1. all numbers are displayed up to 2 decimal places
+        2. prefixed by + for income and - for expenses
+        3. comma separated after 3 digits
+        4. Special case: No special formatting for 0
+    */
+
+    if (number == 0) {
+        return '0';
+    }
+
+    number = Math.abs(number);
+
+    numberString = number.toFixed(2);
+
+    let [integerPart, decimalPart] = numberString.split('.');
+
+    integerPart = parseFloat(integerPart).toLocaleString('en-US');
+
+    numberString = integerPart + '.' + decimalPart;
+
+    switch (type) {
+        case 'income':
+            numberString = '+ ' + numberString;
+            break;
+        case 'expense':
+            numberString = '- ' + numberString;
+            break;
+        default:
+        // invalid type parameter
+    }
+
+    console.log('returning ' + numberString);
+
+    return numberString;
 }
 
 
