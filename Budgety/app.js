@@ -51,6 +51,7 @@ var DOMstrings = {
     totalExpensePercentLabel: ".budget__expenses--percentage",
     incomeContainer: ".income__list",
     expenseContainer: ".expenses__list",
+    itemContainer: ".container",
     inputType: ".add__type",
     inputDescription: ".add__description",
     inputValue: ".add__value",
@@ -123,10 +124,6 @@ function onAddItem() {
     }
 }
 
-function onDeleteItem() {
-
-}
-
 
 // add item functions
 function addIncomeItem(inputDescription, inputValue) {
@@ -138,7 +135,7 @@ function addIncomeItem(inputDescription, inputValue) {
     updateIncomeList(incomeObj);
 
     // update total income
-    updateTotalIncome(incomeObj.value);
+    updateTotalIncome();
 
     // update budget value
     updateBudget();
@@ -198,6 +195,63 @@ function addExpenseItem(inputDescription, inputValue) {
 }
 
 
+function onDeleteItem(event) {
+
+    const itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (!itemId) return;
+
+    const itemType = itemId.split('-')[0];
+
+    if (itemType === 'income') {
+        deleteIncomeItem(itemId);
+    }
+
+    if (itemType === 'expense') {
+        deleteExpenseItem(itemId);
+    }
+}
+
+// delete item functions
+function deleteIncomeItem(itemId) {
+
+    // get income item object corresponding to the income id
+    const incomeItem = getIncomeItem(itemId);
+
+    // remove the item from the income list
+    deleteIncomeItemFromIncomeList(incomeItem);
+
+    // update total income
+    updateTotalIncome();
+
+    // update budget value
+    updateBudget();
+
+    // update expense percentages for total and for individual expense items
+    updateTotalExpensesPercentage()
+    updateExpenseItemPercentages()
+
+    /* 
+        update the UI
+        1. item disappears from the income list
+        2. total income
+        3. budget
+        4. total percent of expenses
+        5. individual percents of expense items
+    */
+
+    removeItemFromUI(itemId);
+    displayTotalIncome();
+    displayBudget();
+    displayPercentageOfTotalExpenses();
+    displayPercentageOfExpenseItems();
+}
+
+function deleteExpenseItem(itemId) {
+
+}
+
+
 // UI display functions
 function displayItem(item, type) {
 
@@ -241,10 +295,7 @@ function displayItem(item, type) {
 }
 
 function displayBudget() {
-    var budgetType = 'income';  // by default budget is positive
-    if (BUDGET < 0) {
-        budgetType = 'expense'
-    }
+    var budgetType = BUDGET < 0 ? 'expense' : 'income';
     document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(BUDGET, budgetType);
 }
 
@@ -334,6 +385,12 @@ function formatNumber(number, type) {
     return numberString;
 }
 
+function removeItemFromUI(itemId) {
+    const element = document.getElementById(itemId);
+    const parentElement = element.parentNode;
+    parentElement.removeChild(element);
+}
+
 
 // data update functions
 function updateBudget() {
@@ -345,7 +402,11 @@ function updateIncomeList(newIncomeObj) {
 }
 
 function updateTotalIncome(newIncomeValue) {
-    INCOME_TOTAL += newIncomeValue;
+    let total = 0;
+    INCOME_LIST.forEach(income => {
+        total += income.value;
+    })
+    INCOME_TOTAL = total;
 }
 
 function updateExpensesList(newExpenseObj) {
@@ -370,10 +431,28 @@ function updateExpenseItemPercentages() {
     });
 }
 
+function getIncomeItem(incomeId) {
+    const index = INCOME_LIST.findIndex(incomeItem => incomeItem.id === incomeId);
+    if (index !== -1) {
+        return INCOME_LIST[index];
+    }
+}
+
+function deleteIncomeItemFromIncomeList(incomeItem) {
+    const index = INCOME_LIST.findIndex(income => income === incomeItem);
+    if (index !== -1) {
+        INCOME_LIST.splice(index, 1);
+    }
+}
+
+function decreaseTotalIncome(deletedIncome) {
+
+}
+
 
 // initialize app
 init();
 
 // event listeners
 document.querySelector(DOMstrings.addButton).addEventListener('click', onAddItem);
-// document.querySelector(DOMstrings.deleteButton).addEventListener('click', onDeleteItem); (add this in runtime)
+document.querySelector(DOMstrings.itemContainer).addEventListener('click', onDeleteItem);
