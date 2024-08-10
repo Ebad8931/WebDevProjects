@@ -215,11 +215,8 @@ function onDeleteItem(event) {
 // delete item functions
 function deleteIncomeItem(itemId) {
 
-    // get income item object corresponding to the income id
-    const incomeItem = getIncomeItem(itemId);
-
     // remove the item from the income list
-    deleteIncomeItemFromIncomeList(incomeItem);
+    deleteIncomeItemFromIncomeList(itemId);
 
     // update total income
     updateTotalIncome();
@@ -431,22 +428,11 @@ function updateExpenseItemPercentages() {
     });
 }
 
-function getIncomeItem(incomeId) {
+function deleteIncomeItemFromIncomeList(incomeId) {
     const index = INCOME_LIST.findIndex(incomeItem => incomeItem.id === incomeId);
-    if (index !== -1) {
-        return INCOME_LIST[index];
-    }
-}
-
-function deleteIncomeItemFromIncomeList(incomeItem) {
-    const index = INCOME_LIST.findIndex(income => income === incomeItem);
     if (index !== -1) {
         INCOME_LIST.splice(index, 1);
     }
-}
-
-function decreaseTotalIncome(deletedIncome) {
-
 }
 
 
