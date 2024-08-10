@@ -146,7 +146,7 @@ function addIncomeItem(inputDescription, inputValue) {
 
     /* 
         update the UI
-        1. item appears in the income list and add event lister to it
+        1. item appears in the income list
         2. total income
         3. budget
         4. total percent of expenses
@@ -181,8 +181,8 @@ function addExpenseItem(inputDescription, inputValue) {
 
     /*
         update the UI
-        1. item appears in the expenses list and add event lister to it
-        2. total income
+        1. item appears in the expenses list
+        2. total expenses
         3. budget
         4. total percent of expenses
         5. input fields reset
@@ -236,7 +236,6 @@ function deleteIncomeItem(itemId) {
         4. total percent of expenses
         5. individual percents of expense items
     */
-
     removeItemFromUI(itemId);
     displayTotalIncome();
     displayBudget();
@@ -246,6 +245,29 @@ function deleteIncomeItem(itemId) {
 
 function deleteExpenseItem(itemId) {
 
+    // remove the item from the expense list
+    deleteExpenseItemFromExpensesList(itemId);
+
+    // update total expenses
+    updateTotalExpenses();
+
+    // update budget value
+    updateBudget();
+
+    // update expense percentages for total expense items
+    updateTotalExpensesPercentage();
+
+    /*
+        update the UI
+        1. item appears in the expenses list
+        2. total expenses
+        3. budget
+        4. total percent of expenses
+    */
+    removeItemFromUI(itemId);
+    displayTotalExpenses();
+    displayBudget();
+    displayPercentageOfTotalExpenses();
 }
 
 
@@ -398,7 +420,7 @@ function updateIncomeList(newIncomeObj) {
     INCOME_LIST.push(newIncomeObj);
 }
 
-function updateTotalIncome(newIncomeValue) {
+function updateTotalIncome() {
     let total = 0;
     INCOME_LIST.forEach(income => {
         total += income.value;
@@ -410,8 +432,12 @@ function updateExpensesList(newExpenseObj) {
     EXPENSES_LIST.push(newExpenseObj);
 }
 
-function updateTotalExpenses(newExpenseValue) {
-    EXPENSES_TOTAL += newExpenseValue;
+function updateTotalExpenses() {
+    let total = 0;
+    EXPENSES_LIST.forEach(expense => {
+        total += expense.value;
+    })
+    EXPENSES_TOTAL = total;
 }
 
 function updateTotalExpensesPercentage() {
@@ -432,6 +458,13 @@ function deleteIncomeItemFromIncomeList(incomeId) {
     const index = INCOME_LIST.findIndex(incomeItem => incomeItem.id === incomeId);
     if (index !== -1) {
         INCOME_LIST.splice(index, 1);
+    }
+}
+
+function deleteExpenseItemFromExpensesList(expenseId) {
+    const index = EXPENSES_LIST.findIndex(expense => expense.id === expenseId);
+    if (index !== -1) {
+        EXPENSES_LIST.splice(index, 1);
     }
 }
 
