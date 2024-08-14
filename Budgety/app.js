@@ -99,6 +99,8 @@ function onAddItem() {
 
     var newItem = getItemInput();
 
+    if (!newItem) return;
+
     if (newItem.type === 'income') {
         addIncomeItem(newItem.description, newItem.value);
     }
@@ -332,7 +334,10 @@ function getItemInput() {
     const inputValue = document.querySelector(DOMstrings.inputValue).value;
     const inputDescription = document.querySelector(DOMstrings.inputDescription).value;
 
-    // TODO: add validation checks before returning
+    if (inputValue === '' || inputDescription === '') {
+        alert('Item Description or Value cannot be empty!')
+        return;
+    }
 
     return {
         type: inputType,
