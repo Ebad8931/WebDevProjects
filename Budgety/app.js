@@ -1,5 +1,4 @@
 // data for the app
-
 var BUDGET = 0;
 var INCOME_TOTAL = 0;
 var EXPENSES_TOTAL = 0;
@@ -7,6 +6,7 @@ var EXPENSES_PERCENTAGE = -1;
 
 var INCOME_LIST = [];
 var EXPENSES_LIST = [];
+
 
 class IncomeItem {
 
@@ -64,7 +64,7 @@ var DOMstrings = {
 // initialize function
 function init() {
 
-    // display current month and year
+    // display current month and year (IIFE)
     (() => {
         var today = new Date()
 
@@ -91,26 +91,10 @@ function init() {
     EXPENSES_LIST.forEach(item => {
         displayItem(item, item.type);
     });
-
-    // FOR TESTING ONLY ...
-    // Dummy list for income items
-    // const incomeList = [
-    //     new IncomeItem('Salary', 3000),
-    //     new IncomeItem('Freelance Work', 1500),
-    //     new IncomeItem('Royalties', 250)
-    // ];
-    // addIncomeItem('Salary', 3000);
-
-    // Dummy list for expense items
-    // const expenseList = [
-    //     new ExpenseItem('Rent', 1000),
-    //     new ExpenseItem('Groceries', 300),
-    //     new ExpenseItem('Utilities', 200)
-    // ];
-    // addExpenseItem('Rent', 1000);
 }
 
 
+// add item function
 function onAddItem() {
 
     var newItem = getItemInput();
@@ -124,8 +108,7 @@ function onAddItem() {
     }
 }
 
-
-// add item functions
+// add item helper functions
 function addIncomeItem(inputDescription, inputValue) {
 
     // create an income object
@@ -161,7 +144,6 @@ function addIncomeItem(inputDescription, inputValue) {
     resetInputFields()
 }
 
-
 function addExpenseItem(inputDescription, inputValue) {
 
     // create an expense object
@@ -195,6 +177,7 @@ function addExpenseItem(inputDescription, inputValue) {
 }
 
 
+// delete item function
 function onDeleteItem(event) {
 
     const itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
@@ -212,7 +195,7 @@ function onDeleteItem(event) {
     }
 }
 
-// delete item functions
+// delete item helper functions
 function deleteIncomeItem(itemId) {
 
     // remove the item from the income list
@@ -474,4 +457,9 @@ init();
 
 // event listeners
 document.querySelector(DOMstrings.addButton).addEventListener('click', onAddItem);
+document.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') {
+        onAddItem();
+    }
+})
 document.querySelector(DOMstrings.itemContainer).addEventListener('click', onDeleteItem);
