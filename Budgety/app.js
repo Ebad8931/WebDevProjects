@@ -1,11 +1,16 @@
-// data for the app
-var BUDGET = 0;
-var INCOME_TOTAL = 0;
-var EXPENSES_TOTAL = 0;
-var EXPENSES_PERCENTAGE = -1;
-
-var INCOME_LIST = [];
-var EXPENSES_LIST = [];
+// data dictionary for the app
+data = {
+    totals: {
+        budget: 0,
+        income: 0,
+        expenses: 0
+    },
+    items: {
+        incomeList: [],
+        expensesList: []
+    },
+    expensesPercentage: -1
+}
 
 
 class IncomeItem {
@@ -33,8 +38,8 @@ class ExpenseItem {
     }
 
     calculatePercentage() {
-        if (INCOME_TOTAL > 0) {
-            this.percentage = this.value * 100 / INCOME_TOTAL;
+        if (data.totals.income > 0) {
+            this.percentage = this.value * 100 / data.totals.income;
         } else {
             this.percentage = -1;
         }
@@ -83,12 +88,12 @@ function init() {
     displayBudget();
 
     // display income items
-    INCOME_LIST.forEach(item => {
+    data.items.incomeList.forEach(item => {
         displayItem(item, item.type);
     });
 
     // display expense items
-    EXPENSES_LIST.forEach(item => {
+    data.items.expensesList.forEach(item => {
         displayItem(item, item.type);
     });
 }
@@ -299,25 +304,25 @@ function displayItem(item, type) {
 }
 
 function displayBudget() {
-    var budgetType = BUDGET < 0 ? 'expense' : 'income';
-    document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(BUDGET, budgetType);
+    var budgetType = data.totals.budget < 0 ? 'expense' : 'income';
+    document.querySelector(DOMstrings.budgetLabel).textContent = formatNumber(data.totals.budget, budgetType);
 }
 
 function displayTotalIncome() {
-    document.querySelector(DOMstrings.totalIncomeLabel).textContent = formatNumber(INCOME_TOTAL, 'income');
+    document.querySelector(DOMstrings.totalIncomeLabel).textContent = formatNumber(data.totals.income, 'income');
 }
 
 function displayTotalExpenses() {
-    document.querySelector(DOMstrings.totalExpensesLabel).textContent = formatNumber(EXPENSES_TOTAL, 'expense');
+    document.querySelector(DOMstrings.totalExpensesLabel).textContent = formatNumber(data.totals.expenses, 'expense');
 }
 
 function displayPercentageOfTotalExpenses() {
-    const expensePercentageLabel = EXPENSES_PERCENTAGE > 0 ? Math.round(EXPENSES_PERCENTAGE) + '%' : '---';
+    const expensePercentageLabel = data.expensesPercentage > 0 ? Math.round(data.expensesPercentage) + '%' : '---';
     document.querySelector(DOMstrings.totalExpensePercentLabel).textContent = expensePercentageLabel;
 }
 
 function displayPercentageOfExpenseItems() {
-    EXPENSES_LIST.forEach(expense => {
+    data.items.expensesList.forEach(expense => {
         const percentageLabel = expense.percentage > 0 ? Math.round(expense.percentage) + '%' : '---';
         const expenseElement = document.getElementById(expense.id);
         if (expenseElement) {
@@ -401,58 +406,58 @@ function removeItemFromUI(itemId) {
 
 // data update functions
 function updateBudget() {
-    BUDGET = INCOME_TOTAL - EXPENSES_TOTAL;
+    data.totals.budget = data.totals.income - data.totals.expenses;
 }
 
 function updateIncomeList(newIncomeObj) {
-    INCOME_LIST.push(newIncomeObj);
+    data.items.incomeList.push(newIncomeObj);
 }
 
 function updateTotalIncome() {
     let total = 0;
-    INCOME_LIST.forEach(income => {
+    data.items.incomeList.forEach(income => {
         total += income.value;
     })
-    INCOME_TOTAL = total;
+    data.totals.income = total;
 }
 
 function updateExpensesList(newExpenseObj) {
-    EXPENSES_LIST.push(newExpenseObj);
+    data.items.expensesList.push(newExpenseObj);
 }
 
 function updateTotalExpenses() {
     let total = 0;
-    EXPENSES_LIST.forEach(expense => {
+    data.items.expensesList.forEach(expense => {
         total += expense.value;
     })
-    EXPENSES_TOTAL = total;
+    data.totals.expenses = total;
 }
 
 function updateTotalExpensesPercentage() {
-    if (INCOME_TOTAL > 0) {
-        EXPENSES_PERCENTAGE = EXPENSES_TOTAL * 100 / INCOME_TOTAL;
+    if (data.totals.income > 0) {
+        data.expensesPercentage = data.totals.expenses * 100 / data.totals.income;
     } else {
-        EXPENSES_PERCENTAGE = -1;
+        data.expensesPercentage = -1;
     }
 }
 
 function updateExpenseItemPercentages() {
-    EXPENSES_LIST.forEach((expense) => {
+    data.items.expensesList.forEach((expense) => {
         expense.calculatePercentage();
     });
 }
 
 function deleteIncomeItemFromIncomeList(incomeId) {
-    const index = INCOME_LIST.findIndex(incomeItem => incomeItem.id === incomeId);
+    const index = data.items.incomeList.findIndex(incomeItem => incomeItem.id === incomeId);
     if (index !== -1) {
-        INCOME_LIST.splice(index, 1);
+        data.items.incomeList.splice(index, 1);
     }
 }
 
 function deleteExpenseItemFromExpensesList(expenseId) {
-    const index = EXPENSES_LIST.findIndex(expense => expense.id === expenseId);
+    const index = data.items.expensesList.findIndex(expense => expense.id === expenseId);
     if (index !== -1) {
-        EXPENSES_LIST.splice(index, 1);
+        data.items.expensesList.splice(index, 1);
     }
 }
 
